@@ -80,12 +80,12 @@ This project demonstrates how data-driven decision-making can improve operationa
 - Improving revenue forecasting accuracy
 - Enhancing manager decision-making speed
 
-## 🚀 How to Run
-
 ## 👨‍💻 Author
 
 Pranjal Malik
 Data Analyst | MSc Graduate (UK)
+
+## 🚀 How to Run
 
 ```bash
 pip install -r requirements.txt
