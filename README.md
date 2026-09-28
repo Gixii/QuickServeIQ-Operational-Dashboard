@@ -89,5 +89,9 @@ Data Analyst | MSc Graduate (UK)
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+streamlit run dashboard/app.py
 
+
+## QuickServeIQ V2
+
+The kitchen decision replay, its SQL layer, assumptions, validation checks, and BI exports are documented in [docs/v2/README.md](docs/v2/README.md). V2 uses fully simulated orders and is separate from the original dashboard.
