@@ -6,6 +6,12 @@ A reproducible portfolio simulation of cooking decisions in a quick-service kitc
 
 > All orders and cooking settings are synthetic or illustrative. This is not a live restaurant system, and its results do not measure real-world improvements.
 
+**[Open the live V2 dashboard](https://quickserveiq-operational-dashboard-knyvzmxqbjwgvtueszs7pm.streamlit.app/)**
+
+![QuickServeIQ V2 dashboard showing a simulated delivery burst and cook-now queue decision](docs/v2/dashboard_preview.jpg)
+
+*Example replay: March 1, 2026, with the simulated delivery burst and half-batch queue prompt enabled. The selected chicken-tender decision shows four units waiting.*
+
 ## The decision
 
 At each 15-minute check, the simulator compares forecast demand and waiting orders with units already ready or cooking. It may start up to two batches per item. An optional **cook-now queue prompt** starts one additional batch when waiting units reach a selected fraction of a batch and none is already cooking. The dashboard lets you select a day, item, queue threshold, and unexpected delivery burst, then inspect the decision trace.
@@ -53,7 +59,7 @@ In [Streamlit Community Cloud](https://share.streamlit.io/), connect the GitHub 
 | Branch | `main` |
 | Main file path | `dashboard/v2_app.py` |
 
-The app builds its local SQLite database from the committed synthetic CSVs when it first starts. No database upload or secrets are needed. Once deployed, open the public app, check the scenario controls, and add its URL and a dashboard screenshot to this README.
+The app builds its local SQLite database from the committed synthetic CSVs when it first starts. No database upload or secrets are needed.
 
 ## Example replay results
 
