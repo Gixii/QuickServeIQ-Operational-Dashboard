@@ -1,0 +1,9 @@
+scenario,queue_threshold_fraction,demand_units,cooked_units,wait_over_5_units,wait_over_10_units,waste_units,extra_prompts,outstanding_at_cutoff
+normal,off,7106,8864,1060,463,1758,0,0
+normal,0.5,7106,8896,798,182,1790,150,0
+normal,0.75,7106,8884,977,341,1778,57,0
+normal,1.0,7106,8868,1003,371,1762,30,0
+delivery_burst,off,7234,8984,1141,529,1750,0,0
+delivery_burst,0.5,7234,9022,863,206,1788,160,0
+delivery_burst,0.75,7234,9010,1046,377,1776,63,0
+delivery_burst,1.0,7234,8994,1073,420,1760,35,0
