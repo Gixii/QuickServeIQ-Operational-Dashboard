@@ -1,6 +1,7 @@
 """QuickServeIQ V2: transparent kitchen decision replay on synthetic data."""
 import sqlite3
 import sys
+from runpy import run_path
 from datetime import timedelta
 from pathlib import Path
 
@@ -9,9 +10,20 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts" / "v2"))
+st.set_page_config(page_title="QuickServeIQ V2", page_icon="🍳", layout="wide")
+
+# The generated SQLite file is ignored by Git. Build it from the committed
+# synthetic CSVs on a fresh checkout, including a Community Cloud deployment.
+@st.cache_resource
+def ensure_database():
+    database = ROOT / "data" / "v2" / "quickserveiq_v2.sqlite"
+    if not database.is_file():
+        run_path(str(ROOT / "scripts" / "v2" / "build_database.py"))
+
+
+ensure_database()
 from engine import DB, MENU, run, test_start  # noqa: E402
 
-st.set_page_config(page_title="QuickServeIQ V2", page_icon="🍳", layout="wide")
 st.title("QuickServeIQ V2 | Kitchen Decision Replay")
 st.caption("Fictional orders and illustrative cooking assumptions. This is a portfolio simulator, not a live store system.")
 

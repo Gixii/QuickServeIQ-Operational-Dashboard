@@ -25,7 +25,6 @@ New orders stop before 22:00; the kitchen may continue cooking accepted orders u
 ```bash
 git clone https://github.com/Gixii/QuickServeIQ-Operational-Dashboard.git
 cd QuickServeIQ-Operational-Dashboard
-git switch v2-kitchen-load
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
@@ -42,7 +41,19 @@ python scripts/v2/evaluate_policy.py
 python scripts/v2/export_bi.py
 ```
 
-If you already have this repository on your Mac at `/Users/giximalik/QuickServiceProject`, enter that folder instead of cloning it. Install dependencies in its existing virtual environment and run the commands from the project root.
+If you already have a local copy, enter its project folder instead of cloning again. Run the commands from the project root in its existing virtual environment.
+
+## Deploy the V2 dashboard
+
+In [Streamlit Community Cloud](https://share.streamlit.io/), connect the GitHub account that owns this repository and create an app using:
+
+| Setting | Value |
+| --- | --- |
+| Repository | `Gixii/QuickServeIQ-Operational-Dashboard` |
+| Branch | `main` |
+| Main file path | `dashboard/v2_app.py` |
+
+The app builds its local SQLite database from the committed synthetic CSVs when it first starts. No database upload or secrets are needed. Once deployed, open the public app, check the scenario controls, and add its URL and a dashboard screenshot to this README.
 
 ## Example replay results
 
