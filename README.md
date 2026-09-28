@@ -8,6 +8,8 @@ A reproducible portfolio simulation of cooking decisions in a quick-service kitc
 
 **[Open the live V2 dashboard](https://quickserveiq-operational-dashboard-knyvzmxqbjwgvtueszs7pm.streamlit.app/)**
 
+[Read the two-minute case study](docs/v2/case_study.md) for the decision, simulated results and limitations.
+
 ![QuickServeIQ V2 dashboard showing a simulated delivery burst and cook-now queue decision](docs/v2/dashboard_preview.jpg)
 
 *Example replay: March 1, 2026, with the simulated delivery burst and half-batch queue prompt enabled. The selected chicken-tender decision shows four units waiting.*
