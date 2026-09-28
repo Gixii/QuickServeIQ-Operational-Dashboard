@@ -94,3 +94,87 @@ Seeded order and item CSVs
 - `scripts/v2/export_bi.py` writes three tables under `data/v2/bi_exports/`. See the [Power BI build guide](docs/v2/powerbi_build_guide.md). A finished `.pbix` report is not included.
 
 For exact definitions, assumptions, and evaluation limits, read the [V2 methodology](docs/v2/README.md). The [original V1 dashboard](dashboard/app.py) remains available with `python -m streamlit run dashboard/app.py`.
+
+<!-- POWERBI-PORTFOLIO-START -->
+## SQL and Power BI: Kitchen Operations Analysis
+
+A two-page Power BI report connects kitchen demand analysis with
+simulated cooking-policy evaluation. It explores when demand peaks
+and how earlier cooking prompts affect waiting times and food waste.
+
+**Data:** Synthetic restaurant orders and simulated kitchen operations.
+These findings are scenario results, not measured outcomes from a live
+restaurant.
+
+### SQL and reporting workflow
+
+- Loaded order and item-level data into SQLite.
+- Aggregated kitchen demand into 15-minute windows by SKU and channel.
+- Reconciled 31,836 item units between source records and the
+  15-minute demand view.
+- Imported kitchen demand, daily item/channel summaries and policy
+  evaluation outputs into Power BI.
+- Used DAX measures to calculate waiting-time and waste percentages
+  from unit counts.
+
+SQL demand aggregation:
+[01_kitchen_load.sql](sql/v2/01_kitchen_load.sql)
+
+Report build guide:
+[Power BI build guide](docs/v2/powerbi_build_guide.md)
+
+### Page 1 — Kitchen Demand
+
+SKU, channel and date filters support exploration of demand volume,
+channel mix and peaks within the day. The screenshot shows
+19 January 2026: 350 units, with the busiest 15-minute window
+starting at 17:30 and containing 24 units.
+
+![Power BI kitchen demand report](docs/v2/screenshots/kitchen-demand.png)
+
+### Page 2 — Policy Trade-off
+
+The table and scatter chart compare eight combinations of demand
+scenario and queue-trigger setting. They show waiting-time rates,
+waste, extra cooking prompts and outstanding demand.
+
+The underlying cooking rule uses a 15-minute forecast, no forecast
+buffer and at most two batches per scheduled check. An additional
+queue trigger can start one batch when pending demand reaches the
+chosen fraction of a batch and no batch is already cooking.
+
+![Power BI cooking policy comparison](docs/v2/screenshots/policy-trade-off.png)
+
+### Findings
+
+During the 26 February–17 March 2026 validation replay:
+
+| Scenario | Queue trigger | Units waiting >5 min | Waste / cooked | Extra prompts |
+|---|---|---:|---:|---:|
+| Normal | Off | 14.9% | 19.8% | 0 |
+| Normal | Half a batch | 11.2% | 20.1% | 150 |
+| Delivery burst | Off | 15.8% | 19.5% | 0 |
+| Delivery burst | Half a batch | 11.9% | 19.8% | 160 |
+
+The half-batch trigger reduced the share of units waiting more than
+five minutes by 3.7 percentage points under normal demand and
+3.9 percentage points under delivery bursts. Waste increased by
+0.3 percentage points in both scenarios.
+
+This illustrates a service-versus-waste trade-off. Under a strict
+20% waste ceiling, the half-batch trigger would miss the target in
+the normal scenario, where waste reached 20.1%.
+
+### Interpretation and limitations
+
+- Waiting metrics are unit-based, not percentages of customers or orders.
+- Waste is measured as wasted units divided by cooked units.
+- Units still outstanding after the simulation's closing clearance
+  are reported separately; all eight displayed rows have zero outstanding.
+- Extra prompts represent additional simulated cooking instructions,
+  not measured staff time.
+- Outcomes depend on the assumed preparation times, batch sizes,
+  holding limits and demand patterns.
+- The final 14-day replay was inspected during development and is
+  not an untouched holdout test.
+<!-- POWERBI-PORTFOLIO-END -->
